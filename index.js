@@ -6,20 +6,20 @@
  * directories, and directories are traversed recursively.
  *
  * Usage:
- *   node index.js [--quality <0-9>] [path ...]
+ *   encode [--quality <0-9>] <path ...>
  *
  * Options:
  *   -q, --quality <0-9>  LAME VBR quality, from 0 (highest) to 9 (lowest).
+ *   -h, --help           Show basic usage information.
  *
  * Inputs:
- *   [path ...]           One or more files and/or directories to encode.
- *                        Defaults to the current directory when omitted.
+ *   <path ...>           One or more files and/or directories to encode.
  *
  * Examples:
- *   node index.js
- *   node index.js "./album"
- *   node index.js "./song.flac"
- *   node index.js -q 2 "./album" "./song.flac" "./more-files"
+ *   encode .
+ *   encode "./album"
+ *   encode "./song.flac"
+ *   encode -q 2 "./album" "./song.flac" "./more-files"
  */
 
 import minimist from 'minimist';
@@ -33,6 +33,12 @@ const SOURCE_EXTENSIONS = new Set(['.flac', '.wav', '.m4a', '.aac', '.opus', '.o
 
 async function main() {
     const options = parseOptions();
+
+    if (options.help || options.paths.length === 0) {
+        printHelp();
+        return;
+    }
+
     const inputPaths = options.paths;
     const quality = options.quality;
     const filenames = collectFilenames(inputPaths)
@@ -47,9 +53,14 @@ function isFileTypeAllowed(filename) {
 }
 
 function parseOptions() {
-    const args = minimist(process.argv.slice(2));
+    const args = minimist(process.argv.slice(2), {
+        alias: {
+            h: 'help',
+            q: 'quality'
+        },
+        boolean: ['help']
+    });
     const rawQuality = args.q ?? args.quality ?? DEFAULT_QUALITY;
-    const rawPaths = args._.length > 0 ? args._ : ['.'];
     const quality = Number.parseInt(rawQuality, 10);
 
     if (!Number.isInteger(quality) || quality < 0 || quality > 9) {
@@ -57,9 +68,26 @@ function parseOptions() {
     }
 
     return {
-        paths: rawPaths.map((inputPath) => path.resolve(process.cwd(), inputPath)),
+        help: args.help,
+        paths: args._.map((inputPath) => path.resolve(process.cwd(), inputPath)),
         quality
     };
+}
+
+function printHelp() {
+    console.log(`Usage: encode [options] <path ...>
+
+Encode supported audio/video files to MP3. Paths can be files or folders;
+folders are traversed recursively.
+
+Options:
+  -q, --quality <0-9>  VBR quality: 0 (highest) to 9 (lowest). Default: 0
+  -h, --help           Show this help
+
+Examples:
+  encode .
+  encode "./album"
+  encode -q 2 "./song.flac" "./more-files"`);
 }
 
 function collectFilenames(inputPaths) {

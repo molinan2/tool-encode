@@ -14,31 +14,37 @@ brew install ffmpeg
 
 # Usage
 
-Place your audio files inside the `files/` folder. Then run:
+Pass the file or folder to encode as an argument. To encode the current folder, run:
 
 ```shell
-node index.js
+encode .
 ```
 
 All subfolders will be traversed recursively. Newly created Mp3 files will be stored next to their source files, within the same folder. Source files/folders will remain untouched.
+
+Running `encode` without an input path shows the command's basic usage help:
+
+```shell
+encode
+```
 
 ### Quality
 
 Specify the quality of the encoding with the option `--quality` (or `-q`) as a number ranging from `0` (highest) to `9` (lowest). Default quality is `0` (maximum):
 
 ```shell
-node index.js -q 2
-node index.js --quality 2
+encode -q 2 .
+encode --quality 2 "./my-folder"
 ```
 
 ### Inputs
 
-Specify one or more input paths as positional arguments. Each path can be either a file or a folder. Folders are traversed recursively. If no input paths are provided, the current working directory will be assumed:
+Specify one or more input paths as positional arguments. Each path can be either a file or a folder. Folders are traversed recursively:
 
 ```shell
-node index.js "./my-folder"
-node index.js "./my-song.flac"
-node index.js "./album" "./single.wav" "./another-folder"
+encode "./my-folder"
+encode "./my-song.flac"
+encode "./album" "./single.wav" "./another-folder"
 ```
 
 # Notes
