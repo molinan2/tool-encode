@@ -17,15 +17,15 @@ brew install ffmpeg
 Pass the file or folder to encode as an argument. To encode the current folder, run:
 
 ```shell
-encode .
+tool-encode .
 ```
 
 All subfolders will be traversed recursively. Newly created Mp3 files will be stored next to their source files, within the same folder. Source files/folders will remain untouched.
 
-Running `encode` without an input path shows the command's basic usage help:
+Running `tool-encode` without an input path shows the command's basic usage help:
 
 ```shell
-encode
+tool-encode
 ```
 
 ### Quality
@@ -33,8 +33,8 @@ encode
 Specify the quality of the encoding with the option `--quality` (or `-q`) as a number ranging from `0` (highest) to `9` (lowest). Default quality is `0` (maximum):
 
 ```shell
-encode -q 2 .
-encode --quality 2 "./my-folder"
+tool-encode -q 2 .
+tool-encode --quality 2 "./my-folder"
 ```
 
 ### Inputs
@@ -42,9 +42,9 @@ encode --quality 2 "./my-folder"
 Specify one or more input paths as positional arguments. Each path can be either a file or a folder. Folders are traversed recursively:
 
 ```shell
-encode "./my-folder"
-encode "./my-song.flac"
-encode "./album" "./single.wav" "./another-folder"
+tool-encode "./my-folder"
+tool-encode "./my-song.flac"
+tool-encode "./album" "./single.wav" "./another-folder"
 ```
 
 # Notes

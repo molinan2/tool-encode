@@ -6,7 +6,7 @@
  * directories, and directories are traversed recursively.
  *
  * Usage:
- *   encode [--quality <0-9>] <path ...>
+ *   tool-encode [--quality <0-9>] <path ...>
  *
  * Options:
  *   -q, --quality <0-9>  LAME VBR quality, from 0 (highest) to 9 (lowest).
@@ -16,10 +16,10 @@
  *   <path ...>           One or more files and/or directories to encode.
  *
  * Examples:
- *   encode .
- *   encode "./album"
- *   encode "./song.flac"
- *   encode -q 2 "./album" "./song.flac" "./more-files"
+ *   tool-encode .
+ *   tool-encode "./album"
+ *   tool-encode "./song.flac"
+ *   tool-encode -q 2 "./album" "./song.flac" "./more-files"
  */
 
 import minimist from 'minimist';
@@ -75,7 +75,7 @@ function parseOptions() {
 }
 
 function printHelp() {
-    console.log(`Usage: encode [options] <path ...>
+    console.log(`Usage: tool-encode [options] <path ...>
 
 Encode supported audio/video files to MP3. Paths can be files or folders;
 folders are traversed recursively.
@@ -85,9 +85,9 @@ Options:
   -h, --help           Show this help
 
 Examples:
-  encode .
-  encode "./album"
-  encode -q 2 "./song.flac" "./more-files"`);
+  tool-encode .
+  tool-encode "./album"
+  tool-encode -q 2 "./song.flac" "./more-files"`);
 }
 
 function collectFilenames(inputPaths) {

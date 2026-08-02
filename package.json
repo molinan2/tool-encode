@@ -1,5 +1,5 @@
 {
-  "name": "lamer",
+  "name": "tool-encode",
   "version": "1.0.0",
   "type": "module",
   "license": "ISC",
@@ -7,7 +7,7 @@
     "node": ">=24"
   },
   "bin": {
-    "encode": "./index.js"
+    "tool-encode": "./index.js"
   },
   "dependencies": {
     "chalk": "^5.6.2",
