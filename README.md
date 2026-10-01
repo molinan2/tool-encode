@@ -22,6 +22,14 @@ tool-encode .
 
 All subfolders will be traversed recursively. Newly created Mp3 files will be stored next to their source files, within the same folder. Source files/folders will remain untouched.
 
+If a source file has a sibling JSON sidecar with the same basename, `tool-encode`
+reads its version 1 normalized `metadata` and embeds available text tags and
+cover art in the MP3. For example, `song.wav` uses `song.json`. The sidecar's
+`audio` must name the source file, and a cover path is relative to the sidecar.
+Missing sidecars do not change the normal encode. Invalid metadata produces a
+warning after the batch; the MP3 is still encoded, with any usable metadata.
+The final warning gives the number of affected tracks. No report file is created.
+
 Running `tool-encode` without an input path shows the command's basic usage help:
 
 ```shell

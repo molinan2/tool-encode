@@ -25,6 +25,7 @@
 import minimist from 'minimist';
 import fs from 'node:fs';
 import path from 'node:path';
+import chalk from 'chalk';
 import storage from './lib/storage.js';
 import encoding from './lib/encoding.js';
 
@@ -45,7 +46,17 @@ async function main() {
         .filter(isFileTypeAllowed)
         .sort((a, b) => a.localeCompare(b));
 
-    await encoding.batchEncodeMp3(filenames, quality);
+    const results = await encoding.batchEncodeMp3(filenames, quality);
+    const affected = results.filter((result) => result.warnings.length);
+
+    for (const result of affected) {
+        for (const warning of result.warnings) {
+            console.error(chalk.red(`Warning: ${result.destination}: ${warning}`));
+        }
+    }
+    if (affected.length) {
+        console.error(chalk.red(`Metadata warnings affected ${affected.length} track(s); details above.`));
+    }
 }
 
 function isFileTypeAllowed(filename) {
