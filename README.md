@@ -26,6 +26,11 @@ If a source file has a sibling JSON sidecar with the same basename, `tool-encode
 reads its version 1 or 2 normalized `metadata` and embeds available text tags and
 cover art in the MP3. For example, `song.wav` uses `song.json`. The sidecar's
 `audio` must name the source file, and a cover path is relative to the sidecar.
+It also embeds the complete JSON sidecar and available TXT files from
+`assets.notes` as ID3 `GEOB` attachments. TXT attachments are UTF-8 text;
+BOM-marked UTF-16 and older Windows-1252 notes are converted to UTF-8. The
+normalized `comment` is written
+to the MP3's `COMM` frame, so it is visible without opening the TXT attachment.
 Version 2 uses `metadata.artists`; existing version 1 sidecars use
 `metadata.authors`. Both are written to the MP3's Artist tag.
 Missing sidecars do not change the normal encode. Invalid metadata produces a
