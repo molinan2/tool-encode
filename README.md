@@ -29,8 +29,9 @@ cover art in the MP3. For example, `song.wav` uses `song.json`. The sidecar's
 It also embeds the complete JSON sidecar and available TXT files from
 `assets.notes` as ID3 `GEOB` attachments. TXT attachments are UTF-8 text;
 BOM-marked UTF-16 and older Windows-1252 notes are converted to UTF-8. The
-normalized `comment` is written
-to the MP3's `COMM` frame, so it is visible without opening the TXT attachment.
+normalized `comment`, when present, contains the source track's own comment and
+is written to the MP3's `COMM` frame. The album TXT is embedded only as a
+`GEOB` file, avoiding a duplicate of its full text in `COMM`.
 Version 2 uses `metadata.artists`; existing version 1 sidecars use
 `metadata.authors`. Both are written to the MP3's Artist tag.
 Missing sidecars do not change the normal encode. Invalid metadata produces a
